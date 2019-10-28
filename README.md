@@ -9,19 +9,20 @@ Desenvolvida utilizando Java JDK 8 e Framework Spring Boot vesão 2.2.0
 
 # Instalação
 Para instalar clone o código em sua pasta de preferencia.
-Abra o terminal ou na sua IDE importe o projeto utilizando o "Maven Exist Projects".
-Abra o arquivo "aplication.propperties" em (SRC->Main->Resources) configure seu banco de dados de acordo com o arquivo.
-Após configurar o seu projeto e escolher o banco de dados corretamente, execute o comando:
-  $ mvn clean package
+* Abra o terminal ou na sua IDE importe o projeto utilizando o "Maven Exist Projects".
+* Abra o arquivo "aplication.propperties" em (SRC->Main->Resources) configure seu banco de dados de acordo com o arquivo.
+* Após configurar o seu projeto e escolher o banco de dados corretamente, execute o comando:
+
+*$ mvn clean package
   
-Abra o painel do MySql e Execute os script no banco.
+*Abra o painel do MySql e Execute os script no banco.
   * CREATE DATABASE benchmark;  
   * CREATE TABLE pessoa (id int NOT NULL AUTO_INCREMENT, 
     nome varchar(100) NOT NULL, 
     sobre_nome varchar(100) NOT NULL, 
     email varchar(150) NOT NULL,
     PRIMARY KEY (id));
-Após criar o banco, e a tabela pessoa, vá na pasta "target" dentro do fonte do projeto e copie o "benchmark-0.0.1-SNAPSHOT.war"
+* Após criar o banco, e a tabela pessoa, vá na pasta "target" dentro do fonte do projeto e copie o "benchmark-0.0.1-SNAPSHOT.war"
 para a pasta "webapps" do seu tomcat.
 
 * Inicie seu tomcat utilizando entrando na pasta "bin" e executando o "startup.bat" (windows) ou no terminal do linux executando
