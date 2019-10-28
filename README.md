@@ -1,7 +1,8 @@
 # Api de testes desenvolvida para o meu Trabalho de Conclusão de Curso da PUC Minas 
 
 Desenvolvida utilizando Java JDK 8 e Framework Spring Boot
-#Requisitos
+
+# Requisitos
 * Java 8 JDK
 * Java 8 SDK
 * Tomcat 9
