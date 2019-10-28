@@ -1,6 +1,8 @@
-# Api de testes desenvolvida para o meu Trabalho de Conclusão de Curso da PUC Minas 
+# Benchmark-api 
+# Este software foi elaborado para o Trabalho de Conclusão de Curso da PUC Minas
+# Onde o foco é realizar um teste de benchmark comparando um ambiente Docker x Virtualização tradicional.
 
-Desenvolvida utilizando Java JDK 8 e Framework Spring Boot vesão 2.2.0
+Este código foi desenvolvido utilizando Java JDK 8 e Framework Spring Boot vesão 2.2.0
 
 # Requisitos
 * Java 8 JDK / Java 8 SDK
