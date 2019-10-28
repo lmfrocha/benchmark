@@ -38,7 +38,8 @@ Endpoints:
 * obs: No envio do arquivo configurar o 'post', no campo 'body' selecionar 'form-data', em Key atribuir "file" e escolher o tipo para "file", inserindo o arquivo no campo value; (Limitação de arquivos de até 1024MB)
 
 * Cadastro de pessoas: 'POST': http://SeuServidor:8080/lista
-  * Estrutura: 
+* Utilizei o site: https://www.onlinedatagenerator.com/ para criar o json, o tamanho você escolhe.
+* Estrutura: 
   ```json  
     [
       {
