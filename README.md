@@ -34,8 +34,8 @@ assim que o tomcat iniciar pode realizar os testes.
 
 Endpoints:
 * Boas vindas: 'GET': http://SeuServidor:8080/
-obs: No envio do arquivo configurar o 'post', no campo 'body' selecionar 'form-data', em Key atribuir "file" e escolher o tipo para "file", inserindo o arquivo no campo value; (Limitação de arquivos de até 1024MB)
 * Upload de arquivo: 'POST' http://SeuServidor:8080/file
+* obs: No envio do arquivo configurar o 'post', no campo 'body' selecionar 'form-data', em Key atribuir "file" e escolher o tipo para "file", inserindo o arquivo no campo value; (Limitação de arquivos de até 1024MB)
 
 * Cadastro de pessoas: 'POST': http://SeuServidor:8080/lista
   * Estrutura: 
