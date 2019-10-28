@@ -1,7 +1,6 @@
 # Benchmark-api 
-# Este software foi elaborado para o Trabalho de Conclusão de Curso da PUC Minas
-# Onde o foco é realizar um teste de benchmark comparando um ambiente Docker x Virtualização tradicional.
-
+Este software foi elaborado para o Trabalho de Conclusão de Curso da PUC Minas
+Onde o foco é realizar um teste de benchmark comparando um ambiente Docker x Virtualização tradicional.
 Este código foi desenvolvido utilizando Java JDK 8 e Framework Spring Boot vesão 2.2.0
 
 # Requisitos
