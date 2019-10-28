@@ -41,7 +41,5 @@ public class TempoProcessamentoAndPessoaDTO implements Serializable{
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
-
-
 	
 }

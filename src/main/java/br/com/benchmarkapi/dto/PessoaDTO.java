@@ -44,5 +44,4 @@ public class PessoaDTO implements Serializable{
 		this.email = email;
 	}
 	
-	
 }
