@@ -15,8 +15,8 @@ Após configurar o seu projeto e escolher o banco de dados corretamente, execute
   $ mvn clean package
   
 Abra o painel do MySql e Execute os script no banco.
-  CREATE DATABASE benchmark;  
-  CREATE TABLE pessoa (id int NOT NULL AUTO_INCREMENT, 
+  * CREATE DATABASE benchmark;  
+  * CREATE TABLE pessoa (id int NOT NULL AUTO_INCREMENT, 
     nome varchar(100) NOT NULL, 
     sobre_nome varchar(100) NOT NULL, 
     email varchar(150) NOT NULL,
