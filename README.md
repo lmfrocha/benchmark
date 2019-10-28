@@ -2,9 +2,9 @@
 
 Desenvolvida utilizando Java JDK 8 e Framework Spring Boot
 #Requisitos
-*Java 8 JDK
-*Java 8 SDK
-*Tomcat 9
+* Java 8 JDK
+* Java 8 SDK
+* Tomcat 9
 * MySql Server
 
 #Instalar
