@@ -39,6 +39,7 @@ Endpoints:
 
 * Cadastro de pessoas: 'POST': http://SeuServidor:8080/lista
   * Estrutura: 
+  ```json  
     [
       {
         "nome":"David",
@@ -61,3 +62,4 @@ Endpoints:
         "email":"Gil_Rossi2686@womeona.net"
       }
     ]
+  ```
