@@ -31,12 +31,23 @@ public class PessoaController {
 	@Autowired
 	private PessoaRepository pessoa;
 	
+	/**
+	 * Scripr de criação
+	 * CREATE TABLE pessoa (
+    id int NOT NULL AUTO_INCREMENT,
+    nome varchar(100) NOT NULL,
+    sobre_nome varchar(100) NOT NULL,
+    email varchar(150) NOT NULL,
+    PRIMARY KEY (id)
+		); 
+	 * 
+	 * */
 	@GetMapping
 	public ResponseEntity<String> test(){
-		String text = "API de benchmark tcc \nLucas Marcelino Ferreira Rocha "
+		String text = "API de benchmark tcc "
+				+ " \nLucas Marcelino Ferreira Rocha - 516726"
 				+ "	\nSistemas de Informação "
 				+ " \nPuc Minas ";
-
 		return ResponseEntity.status(HttpStatus.OK).body(text);
 	}
 	
@@ -56,7 +67,7 @@ public class PessoaController {
 		String tempo;
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		Date dataIni = new Date();
-		tempo = ("Inicio do processamento: " + dateFormat.format(dataIni));
+		tempo = (dateFormat.format(dataIni));
 		tpDTO.setTempoInicial(tempo);
 		
 		List<Pessoa> pessoaList = new ArrayList<>();
@@ -72,7 +83,7 @@ public class PessoaController {
 
 		Date dataFim = new Date();
 		tempo = "";
-		tempo = ("Fim do processamento: " + dateFormat.format(dataFim));
+		tempo = (dateFormat.format(dataFim));
 		tpDTO.setTempoFinal(tempo);
 		tpDTO.setQuantidade(pessoaList.size());
 		

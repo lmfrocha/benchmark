@@ -30,15 +30,15 @@ public class FileController {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		Date dataIni = new Date();
 		
-		tempo = ("Inicio do processamento: " + dateFormat.format(dataIni));
+		tempo = (dateFormat.format(dataIni));
 		arqResponse.setTempoInicial(tempo);
 		arquivo.salvarArquivo(file);
 		
 		Date dataFim = new Date();
 		tempo = "";
-		tempo = ("Fim do processamento: " + dateFormat.format(dataFim));
+		tempo = (dateFormat.format(dataFim));
 		arqResponse.setTempoFinal(tempo);
-		arqResponse.setNome(file.getName());
+		arqResponse.setNome(file.getOriginalFilename());
 		arqResponse.setTamanho(file.getSize());
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(arqResponse);
