@@ -8,6 +8,6 @@ COPY /home/lucas/DEV/mysql-connector-java-8.0.11.jar /usr/local/tomcat/lib/mysql
 
 COPY /home/lucas/DEV/mysql-connector-java-5.1.34.jar /usr/local/tomcat/lib/mysql-connector-java-5.1.34.jar
 
-COPY /home/lucas/DEV/benchmark.war:/usr/local/tomcat/webapps/benchmark.war
+COPY /home/lucas/DEV/benchmark.war /usr/local/tomcat/webapps/benchmark.war
 
 CMD ["catalina.sh","run"]
