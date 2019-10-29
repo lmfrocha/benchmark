@@ -1,28 +1,26 @@
 package br.com.benchmarkapi.controller;
 
-import java.net.URI;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.benchmarkapi.dto.PessoaDTO;
-import br.com.benchmarkapi.dto.TempoProcessamentoAndPessoaDTO;
+import br.com.benchmarkapi.dto.Telemetria;
 import br.com.benchmarkapi.model.Pessoa;
 import br.com.benchmarkapi.repository.PessoaRepository;
+import br.com.benchmarkapi.service.Algoritimos;
 
 @RestController
 @RequestMapping("/")
@@ -31,17 +29,16 @@ public class PessoaController {
 	@Autowired
 	private PessoaRepository pessoa;
 	
-	/**
-	 * Scripr de criação
-	 * CREATE TABLE pessoa (
-    id int NOT NULL AUTO_INCREMENT,
-    nome varchar(100) NOT NULL,
-    sobre_nome varchar(100) NOT NULL,
-    email varchar(150) NOT NULL,
-    PRIMARY KEY (id)
-		); 
-	 * 
-	 * */
+	private Telemetria telemetria = new Telemetria();
+	
+	private Date dataInicial;
+	
+	private Date dataFinal;
+	
+	private Long tempoCorrido;
+	
+	private DateFormat dateFormat =  new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	
 	@GetMapping
 	public ResponseEntity<String> test(){
 		String text = "API de benchmark tcc "
@@ -51,24 +48,73 @@ public class PessoaController {
 		return ResponseEntity.status(HttpStatus.OK).body(text);
 	}
 	
-	@PostMapping("pessoa")
-	public ResponseEntity<Pessoa> criar(@RequestBody Pessoa pessoa, HttpServletResponse response) {
-		Pessoa ps = this.pessoa.save(pessoa);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
-			.buildAndExpand(ps.getId()).toUri();
-		response.setHeader("Location", uri.toASCIIString());
-		return ResponseEntity.created(uri).body(ps);
-	}
-	
-	@PostMapping("lista")
-	public ResponseEntity<TempoProcessamentoAndPessoaDTO> salvarListaPessoas(@RequestBody List<PessoaDTO> lista){
-		TempoProcessamentoAndPessoaDTO tpDTO = new TempoProcessamentoAndPessoaDTO();
+	@SuppressWarnings("rawtypes")
+	@GetMapping("fibonacci/{sequencia}")
+	public ResponseEntity calcular(@PathVariable Double sequencia) {
+		StringBuilder response = new StringBuilder();
 		
 		String tempo;
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		Date dataIni = new Date();
-		tempo = (dateFormat.format(dataIni));
-		tpDTO.setTempoInicial(tempo);
+		Long tempoInicial = System.currentTimeMillis();
+		this.dataInicial = new Date();
+		tempo =  this.dateFormat.format(this.dataInicial);
+		this.telemetria.setDataInicial(tempo);
+		
+		this.telemetria.setSequenciaFibonacci(Algoritimos.returnSequence(sequencia));
+		
+		this.dataFinal = new Date();
+		tempo = (dateFormat.format(this.dataFinal));
+		this.telemetria.setDataFinal(tempo);
+		
+		this.tempoCorrido = (this.dataFinal.getTime() - this.dataInicial.getTime())/60;
+		this.telemetria.setTempoTotal(this.tempoCorrido.toString());
+		Long tempoFinal = System.currentTimeMillis();
+		
+		response.append("TempoInicial: "+ this.telemetria.getDataInicial());
+		response.append("\nTempoFinal: "+ this.telemetria.getDataFinal());
+		response.append("\nSequencia: " + sequencia);
+		response.append("Executado em: " + (tempoFinal - tempoInicial)/1000 + " segundos");
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response.toString());
+	}
+	
+	@GetMapping("sort/{tamanho}")
+	public ResponseEntity<String> sort(@PathVariable Long tamanho){
+		StringBuilder response = new StringBuilder();
+		String tempo;
+		Long[] vetor = new Long[tamanho.intValue()];
+		for (int i = 0; i < vetor.length; i++) {
+			vetor[i] = (long) (Math.random() * tamanho);
+		}
+		
+		tempo =  this.dateFormat.format(this.dataInicial);
+		this.telemetria.setDataInicial(tempo);
+		Long tempoInicial = System.currentTimeMillis();
+		
+		Algoritimos.insertionSort(vetor);
+		
+		this.dataFinal = new Date();
+		tempo = (dateFormat.format(this.dataFinal));
+		this.telemetria.setDataFinal(tempo);
+		
+		this.tempoCorrido = (this.dataFinal.getTime() - this.dataInicial.getTime())/60;
+		this.telemetria.setTempoTotal(this.tempoCorrido.toString());
+		Long tempoFinal = System.currentTimeMillis();
+
+		response.append("TempoInicial: "+ this.telemetria.getDataInicial());
+		response.append("\nTempoFinal: "+ this.telemetria.getDataFinal());
+		response.append("\nTamanho: " + tamanho);
+		response.append("Executado em: " + (tempoFinal - tempoInicial)/1000 + " segundos");
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response.toString());
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@PostMapping("lista")
+	public ResponseEntity salvarListaPessoas(@RequestBody List<PessoaDTO> lista){
+		StringBuilder response = new StringBuilder();
+		String tempo;
+		
+		tempo =  this.dateFormat.format(this.dataInicial);
+		this.telemetria.setDataInicial(tempo);
+		Long tempoInicial = System.currentTimeMillis();
 		
 		List<Pessoa> pessoaList = new ArrayList<>();
 		lista.forEach(x -> {
@@ -78,15 +124,20 @@ public class PessoaController {
 			temp.setEmail(x.getEmail());
 			pessoaList.add(temp);
 		});
-		
 		pessoa.saveAll(pessoaList);
-
-		Date dataFim = new Date();
-		tempo = "";
-		tempo = (dateFormat.format(dataFim));
-		tpDTO.setTempoFinal(tempo);
-		tpDTO.setQuantidade(pessoaList.size());
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(tpDTO);
+		this.dataFinal = new Date();
+		tempo = (dateFormat.format(this.dataFinal));
+		this.telemetria.setDataFinal(tempo);
+		
+		this.tempoCorrido = (this.dataFinal.getTime() - this.dataInicial.getTime())/60;
+		this.telemetria.setTempoTotal(this.tempoCorrido.toString());
+		Long tempoFinal = System.currentTimeMillis();
+		
+		response.append("TempoInicial: "+ this.telemetria.getDataInicial());
+		response.append("\nTempoFinal: "+ this.telemetria.getDataFinal());
+		response.append("\nQuantidade: " + pessoaList.size());
+		response.append("Executado em: " + (tempoFinal - tempoInicial)/1000 + " segundos");
+		return ResponseEntity.status(HttpStatus.CREATED).body(response.toString());
 	}
 }
