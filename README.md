@@ -34,12 +34,15 @@ assim que o tomcat iniciar pode realizar os testes.
 * Recomendo utilizar o Postman para realizar as requisições ou outro consumidor de api de sua preferência.
 
 Endpoints:
-* Boas vindas: 'GET': http://SeuServidor:8080/
-* Upload de arquivo: 'POST' http://SeuServidor:8080/file
+* Boas vindas: 'GET': http://SeuServidor:8080/benchmark
+* Teste de CPU via algoritimo - Insertion Sort: 'GET': http://SeuServidor:8080/benchmark/sort/TamanhoDoVetor-NumeroInteiro
+* Teste de CPU via algoritimo - Fibonacci: 'GET': http://SeuServidor:8080/benchmark/fibonacci/Sequencia-NumeroInteiro
+* Teste de Consumo de disco - Upload de arquivo: 'POST' http://SeuServidor:8080/file
 * obs: No envio do arquivo configurar o 'post', no campo 'body' selecionar 'form-data', em Key atribuir "file" e escolher o tipo para "file", inserindo o arquivo no campo value; (Limitação de arquivos de até 1024MB)
 
-* Cadastro de pessoas: 'POST': http://SeuServidor:8080/lista
-* Utilizei o site: https://www.onlinedatagenerator.com/ para criar o json, o tamanho você escolhe.
+* Teste de Processamento - Cadastro de pessoas: 'POST': http://SeuServidor:8080/lista
+* Dados aleatorios gerados em site: https://www.onlinedatagenerator.com/ 
+  {monte a estrutura com nome, sobreNome, email}
 * Estrutura: 
   ```json  
     [
