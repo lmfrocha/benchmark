@@ -79,15 +79,16 @@ public class PessoaController {
 	@GetMapping("sort/{tamanho}")
 	public ResponseEntity<String> sort(@PathVariable Long tamanho){
 		StringBuilder response = new StringBuilder();
-		String tempo;
 		Long[] vetor = new Long[tamanho.intValue()];
 		for (int i = 0; i < vetor.length; i++) {
 			vetor[i] = (long) (Math.random() * tamanho);
 		}
 		
+		String tempo;
+		Long tempoInicial = System.currentTimeMillis();
+		this.dataInicial = new Date();
 		tempo =  this.dateFormat.format(this.dataInicial);
 		this.telemetria.setDataInicial(tempo);
-		Long tempoInicial = System.currentTimeMillis();
 		
 		Algoritimos.insertionSort(vetor);
 		
