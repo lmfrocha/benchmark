@@ -2,14 +2,17 @@ package br.com.benchmarkapi.service;
 
 public interface Algoritimos {
 
-	public static String returnSequence(Double quantidade) {
+	public static String returnSequence(Integer quantidade) {
     	StringBuilder response = new StringBuilder();
-    	Double num1 = 1D, num2 = 0D;
-    	for(Double i = 0D; i < quantidade; i++){
-    		num1 = num1 + num2;
-    		num2 = num1 - num2;
-    		response.append(num1 + " ");
-    	}
+    	
+    	int n1 = 0;
+        int n2 = 1;
+
+        for ( int i = 0; i < quantidade; i++ ) {
+            response.append( n1 + " ");
+            n2 = n1 + n2 + ( n1 = n2 ) - n2;
+        }
+    	
     	return response.toString();
     }
 	

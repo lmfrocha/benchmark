@@ -50,10 +50,10 @@ public class PessoaController {
 	
 	@SuppressWarnings("rawtypes")
 	@GetMapping("fibonacci/{sequencia}")
-	public ResponseEntity calcular(@PathVariable Double sequencia) {
+	public ResponseEntity calcular(@PathVariable Integer sequencia) {
 		StringBuilder response = new StringBuilder();
-		
 		String tempo;
+
 		Long tempoInicial = System.currentTimeMillis();
 		this.dataInicial = new Date();
 		tempo =  this.dateFormat.format(this.dataInicial);
@@ -70,9 +70,10 @@ public class PessoaController {
 		Long tempoFinal = System.currentTimeMillis();
 		
 		response.append("TempoInicial: "+ this.telemetria.getDataInicial());
-		response.append("\nTempoFinal: "+ this.telemetria.getDataFinal());
-		response.append("\nSequencia: " + sequencia);
-		response.append("Executado em: " + (tempoFinal - tempoInicial)/1000 + " segundos");
+		response.append(" TempoFinal: "+ this.telemetria.getDataFinal());
+		response.append(" Sequencia: " + sequencia);
+		response.append(" Executado em: " + (tempoFinal - tempoInicial)/1000 + " segundos");
+		response.append(" Calculados: " + this.telemetria.getSequenciaFibonacci());
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response.toString());
 	}
 	
@@ -101,9 +102,9 @@ public class PessoaController {
 		Long tempoFinal = System.currentTimeMillis();
 
 		response.append("TempoInicial: "+ this.telemetria.getDataInicial());
-		response.append("\nTempoFinal: "+ this.telemetria.getDataFinal());
-		response.append("\nTamanho: " + tamanho);
-		response.append("Executado em: " + (tempoFinal - tempoInicial)/1000 + " segundos");
+		response.append(" TempoFinal: "+ this.telemetria.getDataFinal());
+		response.append(" Tamanho: " + tamanho);
+		response.append(" Executado em: " + (tempoFinal - tempoInicial)/1000 + " segundos");
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response.toString());
 	}
 	
@@ -111,11 +112,12 @@ public class PessoaController {
 	@PostMapping("lista")
 	public ResponseEntity salvarListaPessoas(@RequestBody List<PessoaDTO> lista){
 		StringBuilder response = new StringBuilder();
-		String tempo;
 		
+		String tempo;
+		Long tempoInicial = System.currentTimeMillis();
+		this.dataInicial = new Date();
 		tempo =  this.dateFormat.format(this.dataInicial);
 		this.telemetria.setDataInicial(tempo);
-		Long tempoInicial = System.currentTimeMillis();
 		
 		List<Pessoa> pessoaList = new ArrayList<>();
 		lista.forEach(x -> {
@@ -136,9 +138,9 @@ public class PessoaController {
 		Long tempoFinal = System.currentTimeMillis();
 		
 		response.append("TempoInicial: "+ this.telemetria.getDataInicial());
-		response.append("\nTempoFinal: "+ this.telemetria.getDataFinal());
-		response.append("\nQuantidade: " + pessoaList.size());
-		response.append("Executado em: " + (tempoFinal - tempoInicial)/1000 + " segundos");
+		response.append(" TempoFinal: "+ this.telemetria.getDataFinal());
+		response.append(" Quantidade: " + pessoaList.size());
+		response.append(" Executado em: " + (tempoFinal - tempoInicial)/1000 + " segundos");
 		return ResponseEntity.status(HttpStatus.CREATED).body(response.toString());
 	}
 }
