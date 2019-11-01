@@ -32,7 +32,7 @@ assim que o tomcat iniciar pode realizar os testes.
 
 # Utilização
 * Recomendo utilizar o Postman para realizar as requisições ou outro consumidor de api de sua preferência.
-
+* Deixei disponivel no heroku: https://benchmark-tcc.herokuapp.com/
 Endpoints:
 * Boas vindas: 'GET': http://SeuServidor:8080/benchmark
 * Teste de CPU via algoritimo - Insertion Sort: 'GET': http://SeuServidor:8080/benchmark/sort/TamanhoDoVetor-NumeroInteiro
