@@ -26,20 +26,24 @@ public class PessoaController {
 		return build.hello();
 	}
 	
+	@GetMapping("lista")
+	public ResponseEntity<?> listarPessoas(){
+		return build.listarPessoas();
+	}
+
+	@PostMapping("lista")
+	public ResponseEntity<?> salvarListaPessoas(@RequestBody List<PessoaDTO> lista){
+		return build.saveListPessoa(lista);
+	}
+	
 	@GetMapping("fibonacci/{sequencia}")
 	public ResponseEntity<?> calcular(@PathVariable Integer sequencia) {
 		return build.calcularFibboBySequencia(sequencia);
 	}
 	
 	@GetMapping("sort/{tamanho}")
-	public ResponseEntity<String> sort(@PathVariable Long tamanho){
+	public ResponseEntity<String> sort(@PathVariable Integer tamanho){
 		return build.ordenarByInsertionSort(tamanho);
 	}
-	
-	@PostMapping("lista")
-	public ResponseEntity<?> salvarListaPessoas(@RequestBody List<PessoaDTO> lista){
-		return build.saveListPessoa(lista);
-	}
-
 	
 }

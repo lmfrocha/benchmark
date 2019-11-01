@@ -16,19 +16,24 @@ public interface Algoritimos {
     	return response.toString();
     }
 	
-	public static void insertionSort(Long[] vetor) {
-		int j;
+	public static void insertionSort(Integer tamanho) {
+		
+		Long[] vetor = new Long[tamanho.intValue()];
+		for (int c = 0; c < vetor.length; c++) {
+			vetor[c] = (long) (Math.random() * tamanho);
+		}
+		
+		int j,i;
 	    Long key;
-	    int i;
 	    
-	    for (j = (int) 1; j < vetor.length; j++)
+	    for (j = 1; j < vetor.length; j++)
 	    {
 	      key = vetor[j];
-	      for (i = (int) (j - 1); (i >= 0) && (vetor[i] > key); i--)
+	      for (i =  (j - 1); (i >= 0) && (vetor[i] > key); i--)
 	      {
-	         vetor[(int) (i + 1)] = vetor[i];
+	         vetor[(i + 1)] = vetor[i];
 	       }
-	        vetor[(int) (i + 1)] = key;
+	        vetor[(i + 1)] = key;
 	    }
 	}
 	

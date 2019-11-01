@@ -42,28 +42,23 @@ public class BenchmarkBuilders {
 				+ " \nLucas Marcelino Ferreira Rocha - 516726"
 				+ "	\nSistemas de Informação "
 				+ " \nPuc Minas ";
-		return ResponseEntity.status(HttpStatus.OK).body(text);
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(text);
 	}
 	
 	public ResponseEntity<?> calcularFibboBySequencia(Integer sequencia) {
 		StringBuilder response = new StringBuilder();
 		String tempo;
-
 		Long tempoInicial = System.currentTimeMillis();
 		this.dataInicial = new Date();
 		tempo =  this.dateFormat.format(this.dataInicial);
 		this.telemetria.setDataInicial(tempo);
-		
 		this.telemetria.setSequenciaFibonacci(Algoritimos.returnSequence(sequencia));
-		
 		this.dataFinal = new Date();
 		tempo = (dateFormat.format(this.dataFinal));
 		this.telemetria.setDataFinal(tempo);
-		
 		this.tempoCorrido = (this.dataFinal.getTime() - this.dataInicial.getTime())/60;
 		this.telemetria.setTempoTotal(this.tempoCorrido.toString());
 		Long tempoFinal = System.currentTimeMillis();
-		
 		response.append("TempoInicial: "+ this.telemetria.getDataInicial());
 		response.append(" TempoFinal: "+ this.telemetria.getDataFinal());
 		response.append(" Sequencia: " + sequencia);
@@ -72,29 +67,20 @@ public class BenchmarkBuilders {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response.toString());
 	}
 	
-	public ResponseEntity<String> ordenarByInsertionSort(Long tamanho) {
+	public ResponseEntity<String> ordenarByInsertionSort(Integer tamanho) {
 		StringBuilder response = new StringBuilder();
-		Long[] vetor = new Long[tamanho.intValue()];
-		for (int i = 0; i < vetor.length; i++) {
-			vetor[i] = (long) (Math.random() * tamanho);
-		}
-		
 		String tempo;
 		Long tempoInicial = System.currentTimeMillis();
 		this.dataInicial = new Date();
 		tempo =  this.dateFormat.format(this.dataInicial);
 		this.telemetria.setDataInicial(tempo);
-		
-		Algoritimos.insertionSort(vetor);
-		
+		Algoritimos.insertionSort(tamanho);
 		this.dataFinal = new Date();
 		tempo = (dateFormat.format(this.dataFinal));
 		this.telemetria.setDataFinal(tempo);
-		
 		this.tempoCorrido = (this.dataFinal.getTime() - this.dataInicial.getTime())/60;
 		this.telemetria.setTempoTotal(this.tempoCorrido.toString());
 		Long tempoFinal = System.currentTimeMillis();
-
 		response.append("TempoInicial: "+ this.telemetria.getDataInicial());
 		response.append(" TempoFinal: "+ this.telemetria.getDataFinal());
 		response.append(" Tamanho: " + tamanho);
@@ -104,13 +90,11 @@ public class BenchmarkBuilders {
 	
 	public ResponseEntity<?> saveListPessoa(List<PessoaDTO> lista) {
 		StringBuilder response = new StringBuilder();
-		
 		String tempo;
 		Long tempoInicial = System.currentTimeMillis();
 		this.dataInicial = new Date();
 		tempo =  this.dateFormat.format(this.dataInicial);
 		this.telemetria.setDataInicial(tempo);
-		
 		List<Pessoa> pessoaList = new ArrayList<>();
 		lista.forEach(x -> {
 			Pessoa temp = new Pessoa();
@@ -120,15 +104,12 @@ public class BenchmarkBuilders {
 			pessoaList.add(temp);
 		});
 		pessoa.saveAll(pessoaList);
-		
 		this.dataFinal = new Date();
 		tempo = (dateFormat.format(this.dataFinal));
 		this.telemetria.setDataFinal(tempo);
-		
 		this.tempoCorrido = (this.dataFinal.getTime() - this.dataInicial.getTime())/60;
 		this.telemetria.setTempoTotal(this.tempoCorrido.toString());
 		Long tempoFinal = System.currentTimeMillis();
-		
 		response.append("TempoInicial: "+ this.telemetria.getDataInicial());
 		response.append(" TempoFinal: "+ this.telemetria.getDataFinal());
 		response.append(" Quantidade: " + pessoaList.size());
@@ -137,27 +118,31 @@ public class BenchmarkBuilders {
 	}
 
 	public ResponseEntity<List<Pessoa>> listarPessoas() {
-		return ResponseEntity.status(HttpStatus.OK).body(pessoa.findAll());
+		List<Pessoa> pList = pessoa.findAll();
+		if(pList.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(pList);
+		}
+		return ResponseEntity.status(HttpStatus.FOUND).body(pList);
 	}
 	
 	public ResponseEntity<Arquivo> uploadFile(MultipartFile file) {
 		Arquivo arqResponse = new Arquivo();
-		
 		String tempo = "";
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		Date dataIni = new Date();
-		
 		tempo = (dateFormat.format(dataIni));
 		arqResponse.setTempoInicial(tempo);
-		arquivo.salvarArquivo(file);
-		
+		try {
+			arquivo.salvarArquivo(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		Date dataFim = new Date();
 		tempo = "";
 		tempo = (dateFormat.format(dataFim));
 		arqResponse.setTempoFinal(tempo);
 		arqResponse.setNome(file.getOriginalFilename());
 		arqResponse.setTamanho(file.getSize());
-		
 		return ResponseEntity.status(HttpStatus.CREATED).body(arqResponse);
 	}
 	
