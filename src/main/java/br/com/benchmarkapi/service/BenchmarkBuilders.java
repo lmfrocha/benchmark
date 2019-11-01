@@ -2,7 +2,6 @@ package br.com.benchmarkapi.service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.com.benchmarkapi.dto.PessoaDTO;
 import br.com.benchmarkapi.dto.Telemetria;
 import br.com.benchmarkapi.files.Arquivo;
 import br.com.benchmarkapi.model.Pessoa;
@@ -88,22 +86,14 @@ public class BenchmarkBuilders {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response.toString());
 	}
 	
-	public ResponseEntity<?> saveListPessoa(List<PessoaDTO> lista) {
+	public ResponseEntity<?> saveListPessoa(List<Pessoa> lista) {
 		StringBuilder response = new StringBuilder();
 		String tempo;
 		Long tempoInicial = System.currentTimeMillis();
 		this.dataInicial = new Date();
 		tempo =  this.dateFormat.format(this.dataInicial);
 		this.telemetria.setDataInicial(tempo);
-		List<Pessoa> pessoaList = new ArrayList<>();
-		lista.forEach(x -> {
-			Pessoa temp = new Pessoa();
-			temp.setNome(x.getNome());
-			temp.setSobreNome(x.getSobreNome());
-			temp.setEmail(x.getEmail());
-			pessoaList.add(temp);
-		});
-		pessoa.saveAll(pessoaList);
+		pessoa.saveAll(lista);
 		this.dataFinal = new Date();
 		tempo = (dateFormat.format(this.dataFinal));
 		this.telemetria.setDataFinal(tempo);
@@ -112,7 +102,7 @@ public class BenchmarkBuilders {
 		Long tempoFinal = System.currentTimeMillis();
 		response.append("TempoInicial: "+ this.telemetria.getDataInicial());
 		response.append(" TempoFinal: "+ this.telemetria.getDataFinal());
-		response.append(" Quantidade: " + pessoaList.size());
+		response.append(" Quantidade: " + lista.size());
 		response.append(" Executado em: " + (tempoFinal - tempoInicial)/1000 + " segundos");
 		return ResponseEntity.status(HttpStatus.CREATED).body(response.toString());
 	}

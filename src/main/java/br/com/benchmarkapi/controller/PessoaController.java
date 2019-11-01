@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.benchmarkapi.dto.PessoaDTO;
+import br.com.benchmarkapi.model.Pessoa;
 import br.com.benchmarkapi.service.BenchmarkBuilders;
 
 @RestController
@@ -32,7 +32,7 @@ public class PessoaController {
 	}
 
 	@PostMapping("lista")
-	public ResponseEntity<?> salvarListaPessoas(@RequestBody List<PessoaDTO> lista){
+	public ResponseEntity<?> salvarListaPessoas(@RequestBody List<Pessoa> lista){
 		return build.saveListPessoa(lista);
 	}
 	
@@ -42,7 +42,7 @@ public class PessoaController {
 	}
 	
 	@GetMapping("sort/{tamanho}")
-	public ResponseEntity<String> sort(@PathVariable Integer tamanho){
+	public ResponseEntity<?> sort(@PathVariable Integer tamanho){
 		return build.ordenarByInsertionSort(tamanho);
 	}
 	
