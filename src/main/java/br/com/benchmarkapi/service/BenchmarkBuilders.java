@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.com.benchmarkapi.dto.PessoaResponseDTO;
 import br.com.benchmarkapi.dto.Telemetria;
 import br.com.benchmarkapi.files.Arquivo;
 import br.com.benchmarkapi.model.Pessoa;
@@ -104,15 +106,32 @@ public class BenchmarkBuilders {
 		response.append(" TempoFinal: "+ this.telemetria.getDataFinal());
 		response.append(" Quantidade: " + lista.size());
 		response.append(" Executado em: " + (tempoFinal - tempoInicial)/1000 + " segundos");
-		return ResponseEntity.status(HttpStatus.CREATED).body(response.toString());
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response.toString());
 	}
 
-	public ResponseEntity<List<Pessoa>> listarPessoas() {
-		List<Pessoa> pList = pessoa.findAll();
-		if(pList.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(pList);
-		}
-		return ResponseEntity.status(HttpStatus.FOUND).body(pList);
+	@Transactional
+	public ResponseEntity<?> listarPessoas() {
+		StringBuilder response = new StringBuilder();
+		String tempo;
+		Long tempoInicial = System.currentTimeMillis();
+		this.dataInicial = new Date();
+		tempo =  this.dateFormat.format(this.dataInicial);
+		this.telemetria.setDataInicial(tempo);
+		List<Pessoa> pessoas = pessoa.findAll();
+		this.dataFinal = new Date();
+		tempo = (dateFormat.format(this.dataFinal));
+		this.telemetria.setDataFinal(tempo);
+		this.tempoCorrido = (this.dataFinal.getTime() - this.dataInicial.getTime())/60;
+		this.telemetria.setTempoTotal(this.tempoCorrido.toString());
+		Long tempoFinal = System.currentTimeMillis();
+		response.append("TempoInicial: "+ this.telemetria.getDataInicial());
+		response.append(" TempoFinal: "+ this.telemetria.getDataFinal());
+		response.append(" Quantidade Retornada: " + pessoas.size());
+		response.append(" Executado em: " + (tempoFinal - tempoInicial)/1000 + " segundos");
+		PessoaResponseDTO pDTO = new PessoaResponseDTO();
+		pDTO.setPessoa(pessoas);
+		pDTO.setResponse(response.toString());
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(pDTO);
 	}
 	
 	public ResponseEntity<Arquivo> uploadFile(MultipartFile file) {
@@ -133,7 +152,7 @@ public class BenchmarkBuilders {
 		arqResponse.setTempoFinal(tempo);
 		arqResponse.setNome(file.getOriginalFilename());
 		arqResponse.setTamanho(file.getSize());
-		return ResponseEntity.status(HttpStatus.CREATED).body(arqResponse);
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(arqResponse);
 	}
 	
 }

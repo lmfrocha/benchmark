@@ -15,7 +15,7 @@ import br.com.benchmarkapi.model.Pessoa;
 import br.com.benchmarkapi.service.BenchmarkBuilders;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/pessoa")
 public class PessoaController {
 
 	@Autowired
@@ -26,22 +26,22 @@ public class PessoaController {
 		return build.hello();
 	}
 	
-	@GetMapping("lista")
-	public ResponseEntity<?> listarPessoas(){
+	@GetMapping("/listar")
+	public ResponseEntity<?> carregar(){
 		return build.listarPessoas();
 	}
 
-	@PostMapping("lista")
+	@PostMapping("/lista")
 	public ResponseEntity<?> salvarListaPessoas(@RequestBody List<Pessoa> lista){
 		return build.saveListPessoa(lista);
 	}
 	
-	@GetMapping("fibonacci/{sequencia}")
+	@GetMapping("/fibonacci/{sequencia}")
 	public ResponseEntity<?> calcular(@PathVariable Integer sequencia) {
 		return build.calcularFibboBySequencia(sequencia);
 	}
 	
-	@GetMapping("sort/{tamanho}")
+	@GetMapping("/sort/{tamanho}")
 	public ResponseEntity<?> sort(@PathVariable Integer tamanho){
 		return build.ordenarByInsertionSort(tamanho);
 	}
