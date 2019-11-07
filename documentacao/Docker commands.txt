@@ -1,0 +1,18 @@
+## Configurando ambiente Docker ##
+
+# Instalado o Portainer "Gerenciador de containers via browser"
+docker run -d -p 9000:9000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v /home/renatogroffe/Desenvolvimento/Portainer/data:/data portainer/portainer
+#url: -> localhost:9000
+
+#Buildando a imagem do dockerfile - Para executar este comando seu terminal tem que estar na mesma pasta do Dockerfile 
+#e o nome "Dockerfile" tem o "D" maiúsculo
+docker build -t=benchmark/benchmark .
+
+#Iniciando o container docker
+docker run -ti -d -p 8080:8080 --name tomcat benchmark/benchmark /opt/tomcat/bin/catalina.sh run
+
+#Deployando o WAR no container - executar o comando abaixo para listar a ID do container
+docker image ls
+
+#comando para copiar um arquivo para pasta de destino dentro do container
+docker cp benchmark.war 43bb8e7105d9:/opt/tomcat/webapps/
