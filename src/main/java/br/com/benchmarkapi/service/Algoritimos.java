@@ -4,17 +4,17 @@ public interface Algoritimos {
 
 	public static String returnSequence(Integer quantidade) {
     	StringBuilder response = new StringBuilder();
-    	
-    	int n1 = 0;
-        int n2 = 1;
-
-        for ( int i = 0; i < quantidade; i++ ) {
-            response.append( n1 + " ");
-            n2 = n1 + n2 + ( n1 = n2 ) - n2;
-        }
-    	
+    	response.append(fibonacci(quantidade.longValue()));
     	return response.toString();
     }
+	
+	static Long fibonacci(Long num) {
+		
+		if(num == 0 || num == 1) {
+			return num;
+		}
+		return fibonacci(num - 1) + fibonacci(num - 2); 
+	}
 	
 	public static void insertionSort(Integer tamanho) {
 		

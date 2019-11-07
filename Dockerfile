@@ -1,13 +1,35 @@
-FROM tomcat:9.0.27-jdk8-openjdk
+FROM alpine:latest
+MAINTAINER Lucas Rocha <lucas.marcelino@outlook.com>
 
-MAINTAINER Lucas Rocha "lucas.marcelino@outlook.com"
+# Expose Web Port
+EXPOSE 8080
 
-COPY /mysql/mysql-connector-java-8.0.17.jar /usr/local/tomcat/lib/mysql-connector-java-8.0.17.jar
+# Set environment
+ENV JAVA_HOME /opt/jdk
+ENV PATH ${PATH}:${JAVA_HOME}/bin
+ENV JAVA_PACKAGE server-jre
 
-COPY /mysql/mysql-connector-java-8.0.11.jar /usr/local/tomcat/lib/mysql-connector-java-8.0.11.jar 
+ENV TOMCAT_VERSION_MAJOR 9
+ENV TOMCAT_VERSION_FULL  9.0.27
+ENV CATALINA_HOME /opt/tomcat
 
-COPY /mysql/mysql-connector-java-5.1.34.jar /usr/local/tomcat/lib/mysql-connector-java-5.1.34.jar
+# Download and install Java
+RUN apk --update add openjdk8-jre &&\
+    mkdir -p /opt/jdk &&\
+    ln -s /usr/lib/jvm/java-1.8-openjdk/bin /opt/jdk
 
-COPY /target/benchmark.war /usr/local/tomcat/webapps/benchmark.war
+#Install Glances
+RUN apk add glances
 
-CMD ["catalina.sh","run"]
+# Download and install Tomcat
+RUN apk add --update curl &&\
+  curl -LO http://ftp.unicamp.br/pub/apache/tomcat/tomcat-9/v9.0.27/bin/apache-tomcat-9.0.27.tar.gz &&\
+  gunzip -c apache-tomcat-${TOMCAT_VERSION_FULL}.tar.gz | tar -xf - -C /opt &&\
+  rm -f apache-tomcat-9.0.27.tar.gz &&\
+  ln -s /opt/apache-tomcat-${TOMCAT_VERSION_FULL} /opt/tomcat &&\
+  rm -rf /opt/tomcat/webapps/examples /opt/tomcat/webapps/docs &&\
+  apk del curl &&\
+  rm -rf /var/cache/apk/*
+
+# Launch Tomcat on startup
+CMD ${CATALINA_HOME}/bin/catalina.sh run
