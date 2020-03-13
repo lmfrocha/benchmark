@@ -1,4 +1,4 @@
-package br.com.benchmarkapi.files;
+package br.com.benchmarkapi.model;
 
 import java.io.IOException;
 import java.nio.file.Files;

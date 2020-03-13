@@ -2,7 +2,7 @@ package br.com.benchmarkapi.dto;
 
 import java.io.Serializable;
 
-public class Telemetria implements Serializable{
+public class TelemetriaDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -12,7 +12,7 @@ public class Telemetria implements Serializable{
 	private String sequenciaFibonacci;
 	private String quantidadeDePessoas;
 	
-	public Telemetria() {}
+	public TelemetriaDTO() {}
 	
 	public String getDataInicial() {
 		return dataInicial;

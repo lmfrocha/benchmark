@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.benchmarkapi.model.Pessoa;
-import br.com.benchmarkapi.service.BenchmarkBuilders;
+import br.com.benchmarkapi.service.AlgoritimoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiOperation;
 public class PessoaController {
 
 	@Autowired
-	private BenchmarkBuilders build;
+	private AlgoritimoService build;
 	
 	@GetMapping
 	public ResponseEntity<String> test(){

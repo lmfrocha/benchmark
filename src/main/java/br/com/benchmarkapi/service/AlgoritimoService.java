@@ -13,14 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.com.benchmarkapi.dto.PessoaResponseDTO;
-import br.com.benchmarkapi.dto.Telemetria;
-import br.com.benchmarkapi.files.Arquivo;
+import br.com.benchmarkapi.dto.TelemetriaDTO;
+import br.com.benchmarkapi.model.Arquivo;
 import br.com.benchmarkapi.model.Pessoa;
 import br.com.benchmarkapi.repository.AlgoritimosRepository;
 import br.com.benchmarkapi.repository.PessoaRepository;
 
 @Service
-public class BenchmarkBuilders {
+public class AlgoritimoService {
 
 	@Autowired
 	private PessoaRepository pessoa;
@@ -28,7 +28,7 @@ public class BenchmarkBuilders {
 	@Autowired
 	private Arquivo arquivo;
 	
-	private Telemetria telemetria = new Telemetria();
+	private TelemetriaDTO telemetria = new TelemetriaDTO();
 	
 	private Date dataInicial;
 	

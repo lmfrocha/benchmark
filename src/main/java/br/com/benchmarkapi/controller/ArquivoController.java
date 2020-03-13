@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.com.benchmarkapi.files.Arquivo;
-import br.com.benchmarkapi.service.BenchmarkBuilders;
+import br.com.benchmarkapi.model.Arquivo;
+import br.com.benchmarkapi.service.AlgoritimoService;
 
 @RestController
 @RequestMapping("/")
-public class FileController {
+public class ArquivoController {
 
 	@Autowired
-	private BenchmarkBuilders build;
+	private AlgoritimoService build;
 	
 	@PostMapping("file")
 	public ResponseEntity<Arquivo> upload(@RequestParam MultipartFile file) {
