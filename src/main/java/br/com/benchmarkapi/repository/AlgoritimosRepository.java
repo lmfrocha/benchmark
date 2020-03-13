@@ -1,6 +1,6 @@
-package br.com.benchmarkapi.service;
+package br.com.benchmarkapi.repository;
 
-public interface Algoritimos {
+public interface AlgoritimosRepository {
 
 	public static String returnSequence(Integer quantidade) {
     	StringBuilder response = new StringBuilder();

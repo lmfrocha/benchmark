@@ -16,6 +16,7 @@ import br.com.benchmarkapi.dto.PessoaResponseDTO;
 import br.com.benchmarkapi.dto.Telemetria;
 import br.com.benchmarkapi.files.Arquivo;
 import br.com.benchmarkapi.model.Pessoa;
+import br.com.benchmarkapi.repository.AlgoritimosRepository;
 import br.com.benchmarkapi.repository.PessoaRepository;
 
 @Service
@@ -52,7 +53,7 @@ public class BenchmarkBuilders {
 		this.dataInicial = new Date();
 		tempo =  this.dateFormat.format(this.dataInicial);
 		this.telemetria.setDataInicial(tempo);
-		this.telemetria.setSequenciaFibonacci(Algoritimos.returnSequence(sequencia));
+		this.telemetria.setSequenciaFibonacci(AlgoritimosRepository.returnSequence(sequencia));
 		this.dataFinal = new Date();
 		tempo = (dateFormat.format(this.dataFinal));
 		this.telemetria.setDataFinal(tempo);
@@ -74,7 +75,7 @@ public class BenchmarkBuilders {
 		this.dataInicial = new Date();
 		tempo =  this.dateFormat.format(this.dataInicial);
 		this.telemetria.setDataInicial(tempo);
-		Algoritimos.insertionSort(tamanho);
+		AlgoritimosRepository.insertionSort(tamanho);
 		this.dataFinal = new Date();
 		tempo = (dateFormat.format(this.dataFinal));
 		this.telemetria.setDataFinal(tempo);
